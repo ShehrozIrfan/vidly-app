@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { getMovies, deleteMovie } from '../services/fakeMovieService';
+import Like from './shared/like';
 
 class Vidly extends React.Component {
   state = {
@@ -23,12 +24,6 @@ class Vidly extends React.Component {
     });
   };
 
-  addFavoriteClass = (movie) => {
-    let classes = 'fa fa-';
-    classes += movie.isFavorite ? 'heart' : 'heart-o';
-    return classes;
-  };
-
   displayMovies() {
     return this.state.movies.map((movie) => (
       <tr key={movie._id}>
@@ -37,12 +32,7 @@ class Vidly extends React.Component {
         <td>{movie.numberInStock}</td>
         <td>{movie.dailyRentalRate}</td>
         <td className="text-center">
-          <i
-            className={this.addFavoriteClass(movie)}
-            aria-hidden="true"
-            onClick={() => this.handleFavorite(movie)}
-            style={{ cursor: 'pointer' }}
-          ></i>
+          <Like movie={movie} handleFavorite={this.handleFavorite} />
         </td>
         <td>
           <button
